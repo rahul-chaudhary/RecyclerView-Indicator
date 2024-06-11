@@ -1,13 +1,10 @@
 package com.example.recyclerviewindicator
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
-import com.bekawestberg.loopinglayout.library.LoopingLayoutManager
+import com.example.recyclerviewindicator.LoopingLayoutManager.LoopingLayoutManager
 import com.example.recyclerviewindicator.adapter.BannerAdapter
 import com.example.recyclerviewindicator.databinding.ActivityMainBinding
 
@@ -22,8 +19,8 @@ class MainActivity : AppCompatActivity() {
 //        binding.bannerRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.bannerRv.layoutManager = LoopingLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.bannerRv.adapter = BannerAdapter(fetchImages())
-        val snapHostHelper = LinearSnapHelper()
-        snapHostHelper.attachToRecyclerView(binding.bannerRv)
+//        val snapHostHelper = LinearSnapHelper()
+//        snapHostHelper.attachToRecyclerView(binding.bannerRv)
 
 
     }
