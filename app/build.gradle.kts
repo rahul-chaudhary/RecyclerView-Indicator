@@ -52,4 +52,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation ("me.relex:circleindicator:2.1.6")
+    implementation ("com.github.beksomega:loopinglayout:0.5.0")
 }

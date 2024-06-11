@@ -1,5 +1,6 @@
 package com.example.recyclerviewindicator.adapter
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -14,8 +15,14 @@ class BannerAdapter(private val imagesItem: List<Int>): RecyclerView.Adapter<Ban
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImagesViewHolder {
-        return ImagesViewHolder(View.inflate(parent.context, R.layout.banner_rv_item, null))
+        val view = View.inflate(parent.context, R.layout.banner_rv_item, null)
+//        return ImagesViewHolder(View.inflate(parent.context, R.layout.banner_rv_item, null))
+        return ImagesViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.banner_rv_item, parent, false)
+        )
     }
+
 
     override fun getItemCount(): Int {
         return imagesItem.size

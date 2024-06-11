@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.bannerRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+//        binding.bannerRv.layoutManager = LoopingLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.bannerRv.adapter = BannerAdapter(fetchImages())
 
 
@@ -26,9 +27,9 @@ class MainActivity : AppCompatActivity() {
     fun fetchImages(): List<Int> {
         val imagesList: List<Int> = listOf(
            R.drawable.banner1,
-            R.drawable.banner1,
-            R.drawable.banner1,
-            R.drawable.banner1
+            R.drawable.banner2,
+            R.drawable.banner3,
+            R.drawable.banner4
         )
         return imagesList
     }
