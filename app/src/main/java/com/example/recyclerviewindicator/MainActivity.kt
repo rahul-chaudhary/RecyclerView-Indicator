@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import com.bekawestberg.loopinglayout.library.LoopingLayoutManager
 import com.example.recyclerviewindicator.adapter.BannerAdapter
 import com.example.recyclerviewindicator.databinding.ActivityMainBinding
 
@@ -17,9 +19,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bannerRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-//        binding.bannerRv.layoutManager = LoopingLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+//        binding.bannerRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.bannerRv.layoutManager = LoopingLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.bannerRv.adapter = BannerAdapter(fetchImages())
+        val snapHostHelper = LinearSnapHelper()
+        snapHostHelper.attachToRecyclerView(binding.bannerRv)
 
 
     }
