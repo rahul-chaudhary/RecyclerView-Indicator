@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
+import com.example.recyclerviewindicator.DummyData.fetchImages
 import com.example.recyclerviewindicator.LoopingLayoutManager.LoopingLayoutManager
 import com.example.recyclerviewindicator.adapter.BannerAdapter
 import com.example.recyclerviewindicator.databinding.ActivityMainBinding
@@ -16,8 +17,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        binding.bannerRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.bannerRv.layoutManager = LoopingLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.bannerRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+//        binding.bannerRv.layoutManager = LoopingLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.bannerRv.adapter = BannerAdapter(fetchImages())
 //        val snapHostHelper = LinearSnapHelper()
 //        snapHostHelper.attachToRecyclerView(binding.bannerRv)
@@ -25,14 +26,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun fetchImages(): List<Int> {
-        val imagesList: List<Int> = listOf(
-           R.drawable.banner1,
-            R.drawable.banner2,
-            R.drawable.banner3,
-            R.drawable.banner4
-        )
-        return imagesList
-    }
+
 
 }
