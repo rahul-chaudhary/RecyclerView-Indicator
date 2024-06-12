@@ -18,10 +18,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.bannerRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-//        binding.bannerRv.layoutManager = LoopingLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+//      binding.bannerRv.layoutManager = LoopingLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.bannerRv.adapter = BannerAdapter(fetchImages())
-//        val snapHostHelper = LinearSnapHelper()
-//        snapHostHelper.attachToRecyclerView(binding.bannerRv)
+//      val snapHostHelper = LinearSnapHelper()
+//      snapHostHelper.attachToRecyclerView(binding.bannerRv)
 
 
     }
