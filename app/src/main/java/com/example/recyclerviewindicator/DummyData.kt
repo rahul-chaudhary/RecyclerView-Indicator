@@ -8,6 +8,7 @@ object DummyData {
             R.drawable.banner3,
             R.drawable.banner4
         )
+
         return imagesList
     }
 }
