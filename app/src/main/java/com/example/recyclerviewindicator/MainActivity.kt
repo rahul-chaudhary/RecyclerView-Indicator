@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
         binding.bannerRv.adapter = BannerAdapter(itemList)
 
         //snap helper
-      val snapHostHelper = LinearSnapHelper()
-      snapHostHelper.attachToRecyclerView(binding.bannerRv)
+//      val snapHostHelper = LinearSnapHelper()
+//      snapHostHelper.attachToRecyclerView(binding.bannerRv)
 
         //scroll listener
         binding.bannerRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -51,8 +51,9 @@ class MainActivity : AppCompatActivity() {
         val handler = Handler()
         val runnable = object : Runnable {
             override fun run() {
-                recyclerView.scrollBy(2, 0)
+                recyclerView.scrollBy(5, 0)
                 handler.postDelayed(this, 0)
+//                val snapHostHelper = LinearSnapHelper().attachToRecyclerView(recyclerView)
             }
         }
         handler.postDelayed(runnable, 0)
