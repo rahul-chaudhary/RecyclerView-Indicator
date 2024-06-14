@@ -1,6 +1,7 @@
 package com.example.recyclerviewindicator
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -41,8 +42,20 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        autoScroll(binding.bannerRv)
 
 
+
+    }
+    private fun autoScroll(recyclerView: RecyclerView) {
+        val handler = Handler()
+        val runnable = object : Runnable {
+            override fun run() {
+                recyclerView.scrollBy(2, 0)
+                handler.postDelayed(this, 0)
+            }
+        }
+        handler.postDelayed(runnable, 0)
     }
 
 
