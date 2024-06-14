@@ -25,11 +25,11 @@ class BannerAdapter(private val imagesItem: List<Int>): RecyclerView.Adapter<Ban
 
 
     override fun getItemCount(): Int {
-        return imagesItem.size
+        return (imagesItem?.size ?: 0) * 2
     }
 
     override fun onBindViewHolder(holder: ImagesViewHolder, position: Int) {
-        val currentItem = imagesItem[position]
+        val currentItem = imagesItem[position % imagesItem.size]
         holder.imgView.setImageResource(currentItem)
         holder.imgView.setOnClickListener {
             // Handle click event
