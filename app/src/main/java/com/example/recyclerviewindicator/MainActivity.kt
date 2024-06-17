@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val viewHeight = (1.25f * viewWidth).toInt()
 
         //layout manager
-                 binding.bannerRv.layoutManager = CustomLayoutManager(viewWidth, screenWidth, viewHeight)
+                 binding.bannerRv.layoutManager = CustomLayoutManager()
 //         binding.bannerRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         //binding.bannerRv.layoutManager = LoopingLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 //        binding.bannerRv.layoutManager = ArcLayoutManager(resources, screenWidth, viewWidth, viewHeight).apply {
