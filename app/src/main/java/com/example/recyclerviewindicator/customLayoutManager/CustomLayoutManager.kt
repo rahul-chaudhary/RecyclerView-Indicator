@@ -25,7 +25,11 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
     private fun fill(recycler: RecyclerView.Recycler) {
         if(itemCount == 0) return
         detachAndScrapAttachedViews(recycler)
-        for(pos in 0 until itemCount) {
+
+        val firstVisibleItem = getFirstVisibleItemPosition()
+        val lastVisibleItem = getLastVisibleItemPosition()
+
+        for(pos in firstVisibleItem .. lastVisibleItem) {
             val view = recycler.getViewForPosition(pos)
             addView(view)
 
@@ -54,17 +58,34 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
         recycler: RecyclerView.Recycler?,
         state: RecyclerView.State?
     ): Int {
-        if(itemCount == 0) return 0
-        val lastOffset = horizontalScrollOffset
-        val firstItem = requireNotNull(getChildAt(0))
-        val lastItem = requireNotNull(getChildAt(itemCount - 1))
-        val startOfFirstItem = getDecoratedLeft(firstItem)
-        val endOfLastItem = getDecoratedRight(lastItem)
-        horizontalScrollOffset = min(max(startOfFirstItem, horizontalScrollOffset + dx), horizontalScrollOffset + endOfLastItem - width)
-        return lastOffset - horizontalScrollOffset
+        if (itemCount == 0) return 0
 
+        val delta = if (dx + horizontalScrollOffset < 0) {
+            -horizontalScrollOffset
+        } else if (dx + horizontalScrollOffset > width * (itemCount - 1)) {
+            width * (itemCount - 1) - horizontalScrollOffset
+        } else {
+            dx
+        }
+
+        horizontalScrollOffset += delta
+
+        offsetChildrenHorizontal(-delta)
+
+        fill(recycler!!)
+
+        return delta
     }
 
+    private fun getFirstVisibleItemPosition(): Int {
+        val firstView = getChildAt(0) ?: return 0
+        return max(0, getDecoratedLeft(firstView) / width)
+    }
+
+    private fun getLastVisibleItemPosition(): Int {
+        val lastView = getChildAt(childCount - 1) ?: return itemCount - 1
+        return min(itemCount - 1, (getDecoratedRight(lastView) - width) / width)
+    }
 
 
 }
