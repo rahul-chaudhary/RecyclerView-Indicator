@@ -4,6 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.min
@@ -23,14 +24,16 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
     }
 
     private fun fill(recycler: RecyclerView.Recycler) {
-        if(itemCount == 0) return
+        if (itemCount == 0) return
+
         detachAndScrapAttachedViews(recycler)
 
         val firstVisibleItem = getFirstVisibleItemPosition()
         val lastVisibleItem = getLastVisibleItemPosition()
 
-        for(pos in firstVisibleItem .. lastVisibleItem) {
-            val view = recycler.getViewForPosition(pos)
+        for (i in firstVisibleItem..lastVisibleItem) {
+            val actualPosition = i % itemCount
+            val view = recycler.getViewForPosition(actualPosition)
             addView(view)
 
             val layoutParams = view.layoutParams as RecyclerView.LayoutParams
@@ -38,19 +41,22 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
             layoutParams.height = height
             view.layoutParams = layoutParams
 
-            var left = pos * width - horizontalScrollOffset //pos * width - horizontalScrollOffset
-            var right = left + width // left + width
-            var top = 0
-            var bottom = top + height
+            val left = (i * width - horizontalScrollOffset + itemCount * width) % (itemCount * width)
+            val right = left + width
+            val top = 0
+            val bottom = top + height
 
             measureChild(view, width, height)
             layoutDecorated(view, left, top, right, bottom)
         }
+
+        // Recycle views that are no longer visible
         val scrapListCopy = recycler.scrapList.toList()
         scrapListCopy.forEach {
             recycler.recycleView(it.itemView)
         }
     }
+
     override fun canScrollHorizontally(): Boolean = true
 
     override fun scrollHorizontallyBy(
@@ -60,16 +66,19 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
     ): Int {
         if (itemCount == 0) return 0
 
-        val delta = if (dx + horizontalScrollOffset < 0) {
-            -horizontalScrollOffset
-        } else if (dx + horizontalScrollOffset > width * (itemCount - 1)) {
-            width * (itemCount - 1) - horizontalScrollOffset
-        } else {
-            dx
-        }
+        val totalWidth = width * itemCount
+        var delta = dx
 
         horizontalScrollOffset += delta
 
+        // Adjust the offset to loop correctly
+        if (horizontalScrollOffset < 0) {
+            horizontalScrollOffset += totalWidth
+        } else if (horizontalScrollOffset >= totalWidth) {
+            horizontalScrollOffset -= totalWidth
+        }
+
+        // Offset children views
         offsetChildrenHorizontal(-delta)
 
         fill(recycler!!)
@@ -78,14 +87,10 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
     }
 
     private fun getFirstVisibleItemPosition(): Int {
-        val firstView = getChildAt(0) ?: return 0
-        return max(0, getDecoratedLeft(firstView) / width)
+        return floor(horizontalScrollOffset.toDouble() / width).toInt()
     }
 
     private fun getLastVisibleItemPosition(): Int {
-        val lastView = getChildAt(childCount - 1) ?: return itemCount - 1
-        return min(itemCount - 1, (getDecoratedRight(lastView) - width) / width)
+        return ceil((horizontalScrollOffset + width).toDouble() / width).toInt() - 1
     }
-
-
 }
