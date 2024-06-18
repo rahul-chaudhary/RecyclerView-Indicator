@@ -29,10 +29,10 @@ class ArcLayoutManager(
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
         fill(recycler, state)
+        detachAndScrapAttachedViews(recycler)
     }
 
     private fun fill(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
-        detachAndScrapAttachedViews(recycler)
 
         // Looping
         val firstVisiblePosition =

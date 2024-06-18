@@ -11,6 +11,7 @@ import kotlin.math.min
 
 class CustomLayoutManager : RecyclerView.LayoutManager() {
 
+    private var scrollEnabled = true
     private var horizontalScrollOffset = 0
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams =
@@ -20,66 +21,66 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
         )
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State?) {
+
         fill(recycler)
     }
 
     private fun fill(recycler: RecyclerView.Recycler) {
         if (itemCount == 0) return
-
         detachAndScrapAttachedViews(recycler)
 
         val firstVisibleItem = getFirstVisibleItemPosition()
-        val lastVisibleItem = getLastVisibleItemPosition()
+        val lastVisibleItem =  getLastVisibleItemPosition()
 
         for (i in firstVisibleItem..lastVisibleItem) {
-            val actualPosition = i % itemCount
+            var actualPosition = i % itemCount
+            if (actualPosition < 0) {
+                actualPosition += itemCount
+            }
             val view = recycler.getViewForPosition(actualPosition)
             addView(view)
 
-            val layoutParams = view.layoutParams as RecyclerView.LayoutParams
-            layoutParams.width = width
-            layoutParams.height = height
-            view.layoutParams = layoutParams
+            layoutTarget(view, i)
 
-            val left = (i * width - horizontalScrollOffset + itemCount * width) % (itemCount * width)
-            val right = left + width
-            val top = 0
-            val bottom = top + height
 
-            measureChild(view, width, height)
-            layoutDecorated(view, left, top, right, bottom)
+            // Remove scrap views
+//            val scrapListCopy = recycler.scrapList.toList()
+//            scrapListCopy.forEach {
+//                recycler.recycleView(it.itemView)
+//            }
+
         }
 
-        // Recycle views that are no longer visible
-        val scrapListCopy = recycler.scrapList.toList()
-        scrapListCopy.forEach {
-            recycler.recycleView(it.itemView)
-        }
+
     }
 
-    override fun canScrollHorizontally(): Boolean = true
+    private fun layoutTarget(view: View, i: Int) {
+        val layoutParams = view.layoutParams as RecyclerView.LayoutParams
+        layoutParams.width = width
+        layoutParams.height = height
+        view.layoutParams = layoutParams
+
+//        val left = (i * width - horizontalScrollOffset + itemCount * width) % (itemCount * width)
+        val left = i * width - horizontalScrollOffset
+        val right = left + width
+        val top = 0
+        val bottom = top + height
+
+        measureChild(view, 0, 0)
+        layoutDecorated(view, left, top, right, bottom)
+    }
+
+    override fun canScrollHorizontally(): Boolean = scrollEnabled
 
     override fun scrollHorizontallyBy(
         dx: Int,
         recycler: RecyclerView.Recycler?,
         state: RecyclerView.State?
     ): Int {
-        if (itemCount == 0) return 0
+        if (itemCount == 0 || dx == 0) return 0
 
         val totalWidth = width * itemCount
-
         horizontalScrollOffset += dx
-
-        // Adjust the offset to loop correctly
-        if (horizontalScrollOffset < 0) {
-            horizontalScrollOffset += totalWidth
-        } else if (horizontalScrollOffset >= totalWidth) {
-            horizontalScrollOffset -= totalWidth
-        }
-
-        // Offset children views
-        offsetChildrenHorizontal(-dx)
-
         fill(recycler!!)
 
         return dx
