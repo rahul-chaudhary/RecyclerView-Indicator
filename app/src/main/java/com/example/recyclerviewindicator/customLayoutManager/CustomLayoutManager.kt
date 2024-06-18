@@ -67,9 +67,8 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
         if (itemCount == 0) return 0
 
         val totalWidth = width * itemCount
-        var delta = dx
 
-        horizontalScrollOffset += delta
+        horizontalScrollOffset += dx
 
         // Adjust the offset to loop correctly
         if (horizontalScrollOffset < 0) {
@@ -79,11 +78,11 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
         }
 
         // Offset children views
-        offsetChildrenHorizontal(-delta)
+        offsetChildrenHorizontal(-dx)
 
         fill(recycler!!)
 
-        return delta
+        return dx
     }
 
     private fun getFirstVisibleItemPosition(): Int {
