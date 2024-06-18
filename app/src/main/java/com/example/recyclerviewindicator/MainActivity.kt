@@ -10,6 +10,7 @@ import com.example.recyclerviewindicator.adapter.BannerAdapter
 import com.example.recyclerviewindicator.archyLayoutManager.ArcLayoutManager
 import com.example.recyclerviewindicator.customLayoutManager.CustomLayoutManager
 import com.example.recyclerviewindicator.databinding.ActivityMainBinding
+import com.google.android.material.progressindicator.LinearProgressIndicator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         val viewHeight = (1.25f * viewWidth).toInt()
 
         //layout manager
-                 binding.bannerRv.layoutManager = CustomLayoutManager()
+        binding.bannerRv.layoutManager = CustomLayoutManager()
 //         binding.bannerRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         //binding.bannerRv.layoutManager = LoopingLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 //        binding.bannerRv.layoutManager = ArcLayoutManager(resources, screenWidth, viewWidth, viewHeight).apply {
@@ -37,8 +38,9 @@ class MainActivity : AppCompatActivity() {
         binding.bannerRv.adapter = BannerAdapter(fetchImages())
 
         //snap helper
-//        val snapHostHelper = LinearSnapHelper()
-//        snapHostHelper.attachToRecyclerView(binding.bannerRv)
+        val snapHostHelper = LinearSnapHelper()
+        snapHostHelper.attachToRecyclerView(binding.bannerRv)
+
 
 
     }

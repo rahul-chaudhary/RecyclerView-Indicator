@@ -1,6 +1,8 @@
 package com.example.recyclerviewindicator
 
 object DummyData {
+
+
     fun fetchImages(): List<Int> {
         val imagesList: List<Int> = listOf(
             R.drawable.banner1,

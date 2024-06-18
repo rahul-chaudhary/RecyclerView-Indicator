@@ -16,10 +16,10 @@ class ArcLayoutManager(
     private val screenWidth: Int,
     private val viewWidth: Int,
     private val viewHeight: Int,
-): RecyclerView.LayoutManager() {
+):RecyclerView.LayoutManager() {
 
     private var horizontalScrollOffset = viewWidth / 2
-    var scrollEnabled = true
+    private var scrollEnabled = true
 
     private val recyclerViewHeight =
         (resources.getDimensionPixelSize(R.dimen.recyclerview_height)).toDouble()
@@ -29,10 +29,10 @@ class ArcLayoutManager(
 
     override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
         fill(recycler, state)
-        detachAndScrapAttachedViews(recycler)
     }
 
     private fun fill(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+        detachAndScrapAttachedViews(recycler)
 
         // Looping
         val firstVisiblePosition =
@@ -49,6 +49,15 @@ class ArcLayoutManager(
 
             layoutChildView(index, viewWidth, view)
 
+//            if (recyclerIndex == itemCount/2) {
+//                val target = LayoutInflater.from(view.context).inflate(R.layout.item_view, null)
+//
+//                target.apply {
+//                    layoutParams = RecyclerView.LayoutParams(viewWidth, viewHeight)
+//                    setBackgroundColor(Color.BLUE)
+//                }
+//                layoutTarget(recyclerIndex, viewWidth, view)
+//            }
         }
 
         // Remove scrap views

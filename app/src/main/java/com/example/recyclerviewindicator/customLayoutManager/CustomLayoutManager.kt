@@ -42,13 +42,6 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
 
             layoutTarget(view, i)
 
-
-            // Remove scrap views
-//            val scrapListCopy = recycler.scrapList.toList()
-//            scrapListCopy.forEach {
-//                recycler.recycleView(it.itemView)
-//            }
-
         }
 
 
@@ -60,7 +53,6 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
         layoutParams.height = height
         view.layoutParams = layoutParams
 
-//        val left = (i * width - horizontalScrollOffset + itemCount * width) % (itemCount * width)
         val left = i * width - horizontalScrollOffset
         val right = left + width
         val top = 0
