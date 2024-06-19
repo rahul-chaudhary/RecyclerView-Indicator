@@ -22,23 +22,23 @@
         app:layout_constraintHeight_percent=".8"
         />
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/linearProgressIndicator"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintWidth_percent=".5"
-        app:layout_constraintHeight_percent=".2"
-        app:layout_constraintTop_toBottomOf="@id/banner_image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:indeterminate="false"
-        app:indicatorDirectionLinear="startToEnd"
-        app:trackThickness="10dp"
-        app:trackCornerRadius="2dp"
-        tools:progress="70"
-
-        />
+<!--    <com.google.android.material.progressindicator.LinearProgressIndicator-->
+<!--        android:id="@+id/linearProgressIndicator"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintWidth_percent=".5"-->
+<!--        app:layout_constraintHeight_percent=".2"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/banner_image"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        android:indeterminate="false"-->
+<!--        app:indicatorDirectionLinear="startToEnd"-->
+<!--        app:trackThickness="10dp"-->
+<!--        app:trackCornerRadius="2dp"-->
+<!--        tools:progress="70"-->
+<!--        app:indicatorColor="@color/green"-->
+<!--        />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

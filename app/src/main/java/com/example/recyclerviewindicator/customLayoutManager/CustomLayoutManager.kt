@@ -78,7 +78,7 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
         return dx
     }
 
-    private fun getFirstVisibleItemPosition(): Int {
+    internal fun getFirstVisibleItemPosition(): Int {
         return floor(horizontalScrollOffset.toDouble() / width).toInt()
     }
 
