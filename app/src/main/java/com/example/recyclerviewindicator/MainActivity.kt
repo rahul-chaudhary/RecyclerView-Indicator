@@ -25,22 +25,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setUpBannerRV()
 
-//        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
+        setUpBannerRV()
+        bannerRVAutoScroll()
+
+
+    }
+
+    private fun bannerRVAutoScroll() {
+        //        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
         val screenWidth = Resources.getSystem().displayMetrics.xdpi.toInt()
         val bannerRVItemCount = binding.bannerRv.adapter?.itemCount ?: 0
         val handler = Handler(Looper.getMainLooper())
 
         val scrollRunnable = object : Runnable {
             override fun run() {
-                binding.bannerRv.smoothScrollBy(screenWidth*2, 0, LinearInterpolator())
+                binding.bannerRv.smoothScrollBy(screenWidth * 2, 0, LinearInterpolator())
                 handler.postDelayed(this, 3000)  // Schedule the next scroll
             }
         }
 
         handler.postDelayed(scrollRunnable, 3000)  // Start the first scroll after 3000 ms
-
     }
 
     private fun setUpBannerRV() {
