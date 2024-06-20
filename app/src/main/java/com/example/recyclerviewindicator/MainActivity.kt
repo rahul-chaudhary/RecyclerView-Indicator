@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +15,8 @@ import com.example.recyclerviewindicator.adapter.BannerAdapter
 import com.example.recyclerviewindicator.archyLayoutManager.ArcLayoutManager
 import com.example.recyclerviewindicator.customLayoutManager.CustomLayoutManager
 import com.example.recyclerviewindicator.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
+import java.util.Timer
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -21,8 +25,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setUpBannerRV()
+
+//        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
+        val screenWidth = Resources.getSystem().displayMetrics.xdpi.toInt()
+        val bannerRVItemCount = binding.bannerRv.adapter?.itemCount ?: 0
+        val handler = Handler(Looper.getMainLooper())
+
+        val scrollRunnable = object : Runnable {
+            override fun run() {
+                binding.bannerRv.smoothScrollBy(screenWidth*2, 0, LinearInterpolator())
+                handler.postDelayed(this, 3000)  // Schedule the next scroll
+            }
+        }
+
+        handler.postDelayed(scrollRunnable, 3000)  // Start the first scroll after 3000 ms
+
     }
 
     private fun setUpBannerRV() {
@@ -58,6 +76,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+
+
 
     }
 
