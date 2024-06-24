@@ -82,7 +82,7 @@ class CustomLayoutManager : RecyclerView.LayoutManager() {
         return floor(horizontalScrollOffset.toDouble() / width).toInt()
     }
 
-    internal fun getLastVisibleItemPosition(): Int {
+    private fun getLastVisibleItemPosition(): Int {
         return ceil((horizontalScrollOffset + width).toDouble() / width).toInt() - 1
     }
 }
